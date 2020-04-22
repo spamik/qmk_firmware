@@ -6,3 +6,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[2] = LAYOUT_ergodox(RESET, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_BSPC, KC_NO, KC_NO, KC_NO, KC_NO, KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS, KC_NO, KC_TRNS, KC_NO, KC_P7, KC_P8, KC_P9, KC_PPLS, KC_NO, KC_NO, KC_P4, KC_P5, KC_P6, KC_PPLS, KC_NO, KC_TRNS, KC_NO, KC_P1, KC_P2, KC_P3, KC_PENT, KC_NO, KC_P0, KC_DOT, KC_PDOT, KC_PENT, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO),
 	[3] = LAYOUT_ergodox(KC_NO, KC_NO, KC_NO, KC_NO, KC_F15, KC_F16, KC_TRNS, KC_NO, KC_NO, LGUI(KC_UP), KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, LGUI(KC_LEFT), LGUI(KC_DOWN), LGUI(KC_RGHT), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, SGUI(KC_X), SGUI(KC_D), SGUI(KC_M), KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_TRNS, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO)
 };
+
+uint32_t layer_state_set_user(uint32_t state) {
+  if (biton32(state) == 0) {
+    ergodox_right_led_3_off();
+  } else {
+    ergodox_right_led_3_on();
+  }
+  return state;
+}
+
+void led_set_kb(uint8_t usb_led) {
+    if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
+        // Turn capslock on
+        ergodox_right_led_2_on();
+    } else {
+        // Turn capslock off
+        ergodox_right_led_2_off();
+	}
+	 if (usb_led & (1<<USB_LED_NUM_LOCK)) {
+        // Turn numlock on
+        ergodox_right_led_1_on();
+    } else {
+        // Turn numlock off
+        ergodox_right_led_1_off();
+	}
+}
